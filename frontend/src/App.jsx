@@ -20,7 +20,7 @@ function Fit({ pts }) {
 }
 
 export default function App() {
-  const [f, setF] = useState({ current: '', pickup: '', dropoff: '', cycle_used: '0' })
+  const [f, setF] = useState({ current: '', pickup: '', dropoff: '', cycle_used: '0', carrier: '', office: '' })
   const [state, setState] = useState({ status: 'idle' })
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
 
@@ -49,6 +49,8 @@ export default function App() {
           <label>Pickup location<input required value={f.pickup} onChange={set('pickup')} placeholder="Indianapolis, IN" /></label>
           <label>Drop-off location<input required value={f.dropoff} onChange={set('dropoff')} placeholder="Dallas, TX" /></label>
           <label>Current cycle used (hours)<input required type="number" min="0" max="69.9" step="0.25" value={f.cycle_used} onChange={set('cycle_used')} /></label>
+          <label>Carrier name (optional)<input value={f.carrier} onChange={set('carrier')} placeholder="Your company" /></label>
+          <label>Main office address (optional)<input value={f.office} onChange={set('office')} placeholder="City, ST" /></label>
           <button className="go" disabled={state.status === 'loading'}>{state.status === 'loading' ? 'Planning trip…' : 'Plan trip'}</button>
           <button type="button" className="ghost" onClick={demo}>Fill example trip</button>
         </form>
@@ -99,7 +101,7 @@ export default function App() {
               <h2>Daily log sheets</h2>
               {d.days.map((day) => {
                 const date = new Date(); date.setDate(date.getDate() + day.day - 1)
-                return <LogSheet key={day.day} day={day} date={date} places={d.places} cycleUsed={d.cycle_used} />
+                return <LogSheet key={day.day} day={day} date={date} places={d.places} cycleUsed={d.cycle_used} carrier={f.carrier} office={f.office} />
               })}
             </section>
           </>

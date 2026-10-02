@@ -6,7 +6,7 @@ const hh = (h) => `${String(Math.floor(h + 1e-6) % 24).padStart(2, '0')}:${Strin
 const fmt = (n) => (Math.round(n * 100) / 100).toString()
 const HOURS = ['Mid', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 'Noon', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 'Mid']
 
-export default function LogSheet({ day, date, places, cycleUsed }) {
+export default function LogSheet({ day, date, places, cycleUsed, carrier, office }) {
   let path = ''
   day.segments.forEach((s, i) => {
     path += `${i ? 'L' : 'M'}${x(s.start)} ${rowY(s.status)}L${x(s.end)} ${rowY(s.status)}`
@@ -36,9 +36,11 @@ export default function LogSheet({ day, date, places, cycleUsed }) {
       <rect x="156" y="112" width="120" height="44" className="s-box" /><text x="216" y="142" textAnchor="middle" className="s-big">{miles}</text>
       <text x="84" y="170" textAnchor="middle" className="s-tiny">Total Miles Driving Today</text>
       <text x="216" y="170" textAnchor="middle" className="s-tiny">Total Mileage Today</text>
+      <text x="598" y="122" textAnchor="middle" className="s-fill">{carrier}</text>
       <line x1="320" x2="876" y1="126" y2="126" className="s-rule" /><text x="598" y="138" textAnchor="middle" className="s-tiny">Name of Carrier or Carriers</text>
+      <text x="598" y="146" textAnchor="middle" className="s-fill">{office}</text>
       <line x1="320" x2="876" y1="150" y2="150" className="s-rule" /><text x="598" y="162" textAnchor="middle" className="s-tiny">Main Office Address</text>
-      <text x="24" y="186" className="s-tiny">Pickup: {places.pickup}</text>
+      <text x="600" y="60" className="s-tiny">Pickup: {places.pickup}</text>
 
       {HOURS.map((h, i) => (
         <text key={i} x={x(i)} y={Y0 - 6} textAnchor="middle" className="s-hour">{h}</text>
