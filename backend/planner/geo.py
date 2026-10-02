@@ -58,9 +58,10 @@ class Polyline:
 
 def reverse(lat, lon):
     try:
-        r = requests.get(f'{NOM}/reverse', params={'lat': lat, 'lon': lon, 'format': 'json', 'zoom': 10}, headers=UA, timeout=10)
+        r = requests.get(f'{NOM}/reverse', params={'lat': lat, 'lon': lon, 'format': 'json', 'zoom': 12}, headers=UA, timeout=10)
         a = r.json().get('address', {})
-        place = a.get('city') or a.get('town') or a.get('village') or a.get('hamlet') or a.get('county')
+        place = (a.get('city') or a.get('town') or a.get('village') or a.get('hamlet') or a.get('municipality')
+                 or a.get('suburb') or a.get('locality') or a.get('county'))
         st = (a.get('ISO3166-2-lvl4') or '')[-2:]
         if place:
             return f'{place}, {st}' if st else place
